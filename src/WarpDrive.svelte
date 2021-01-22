@@ -1,8 +1,11 @@
 <script>
+  import { derived } from 'svelte/store';
   import { warpFactor } from './stores.js';
 
+  const maxWarpFactor = 10;
+
   function increaseWarpFactor() {
-    if ($warpFactor < 10) {
+    if ($warpFactor < maxWarpFactor) {
       warpFactor.update((n) => n + 1);
     }
   }
@@ -12,12 +15,16 @@
       warpFactor.update((n) => n - 1);
     }
   }
+
+  const warpIndicator = derived(warpFactor, ($warpFactor) => {
+    return $warpFactor === maxWarpFactor ? 'Maximum Warp' : 'Warp ' + $warpFactor;
+  });
 </script>
 
 <div>
-  Warp Factor { $warpFactor }
-  <button on:click={ increaseWarpFactor }>+</button>
   <button on:click={ decreaseWarpFactor }>-</button>
+  <button on:click={ increaseWarpFactor }>+</button>
+  { $warpIndicator }
 </div>
 
 <style>
@@ -26,7 +33,7 @@
     width: 500px;
   }
   button {
-    margin-left: 2px;
+    margin-right: 2px;
     width: 30px;
   }
 </style>
