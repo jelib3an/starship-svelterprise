@@ -1,3 +1,3 @@
 import { writable } from 'svelte/store';
 
-export const warpFactor = writable(5);
+export const warpFactor = writable(1);
