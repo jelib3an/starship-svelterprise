@@ -2,6 +2,14 @@
   import { derived } from 'svelte/store';
   import { maxWarpFactor, warpFactor } from './WarpDrive.svelte';
 
+  const defaultShipClass = 'ambassador';
+  const availableShipClasses = ['ambassador', 'galaxy'];
+
+  export let shipClass = defaultShipClass;
+  if (!availableShipClasses.includes(shipClass)) {
+    shipClass = defaultShipClass;
+  }
+
   const quote = derived(warpFactor, ($warpFactor) => {
     if ($warpFactor >= maxWarpFactor) {
       return 'I\'m giving her all she\'s got, captain!';
@@ -10,18 +18,27 @@
   });
 </script>
 
-<div class="starfield">
-  <div class="sm-stars" style="animation-duration:{ 25 / $warpFactor }s"></div>
-  <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s"></div>
-  <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s"></div>
-</div>
 <div class="quote">
   <slot>
     <p>{ $quote }</p>
   </slot>
 </div>
+<div class="starfield">
+  <div class="sm-stars" style="animation-duration:{ 25 / $warpFactor }s"></div>
+  <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s"></div>
+  <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s"></div>
+  <div class="starship">
+    <img src="{shipClass}-class.png" alt="starship" />
+  </div>
+</div>
 
 <style>
+ .starship {
+   position: relative;
+   left: 200px;
+   top: 75px;
+ }
+
  .quote {
    font-family: "Times New Roman", Times, serif;
    font-style: italic;

@@ -4,11 +4,20 @@
 </script>
 
 <main>
+  <h3>Demonstrate warp capability</h3>
   <WarpDrive />
   <StarshipSvelterprise />
-  <!-- slot for custom quote
-  <StarshipSvelterprise>
+
+  <hr />
+
+  <h3>Demonstrate changing the ship class and quote using props and slots</h3>
+  <StarshipSvelterprise shipClass={"galaxy"}>
     <p>Take us out, Mr. Sulu.</p>
   </StarshipSvelterprise>
-  -->
 </main>
+
+<style>
+  h3 {
+    text-align: center;
+  }
+</style>
