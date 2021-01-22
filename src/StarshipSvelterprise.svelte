@@ -1,16 +1,16 @@
 <script>
-  let speed = 1;
+  import { warpFactor } from './stores.js';
 </script>
 
 <div class="enterprise-container">
-  <div class="sm-stars" style="animation-duration:{1/speed * 25}s"></div>
-  <div class="med-stars" style="animation-duration:{1/speed * 50}s"></div>
-  <div class="lg-stars" style="animation-duration:{1/speed * 75}s"></div>
+  <div class="sm-stars" style="animation-duration:{ 25 / $warpFactor }s"></div>
+  <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s"></div>
+  <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s"></div>
 </div>
 
 <style>
  .enterprise-container {
-    margin: auto;
+    margin: 5px auto 5px auto;
     width: 500px;
     height: 200px;
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
@@ -22,7 +22,7 @@
       transform: translateX(0px);
     }
     to {
-      transform: translateX(-500px);
+      transform: translateX(-1000px);
     }
   }
 
@@ -36,7 +36,7 @@
   .sm-stars:after {
     content: " ";
     position: absolute;
-    top: 200px;
+    left: 1000px;
     width: 1px;
     height: 1px;
     background: transparent;
@@ -53,7 +53,7 @@
   .med-stars:after {
     content: " ";
     position: absolute;
-    top: 200px;
+    left: 1000px;
     width: 2px;
     height: 2px;
     background: transparent;
@@ -70,7 +70,7 @@
   .lg-stars:after {
     content: " ";
     position: absolute;
-    top: 200px;
+    left: 1000px;
     width: 3px;
     height: 3px;
     background: transparent;
