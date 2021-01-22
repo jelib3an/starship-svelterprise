@@ -1,7 +1,7 @@
 <script>
-  import USSEnterprise from "./USSEnterprise.svelte";
+  import StarshipSvelterprise from "./StarshipSvelterprise.svelte";
 </script>
 
 <main>
-  <USSEnterprise />
+  <StarshipSvelterprise />
 </main>
