@@ -6,4 +6,9 @@
 <main>
   <WarpDrive />
   <StarshipSvelterprise />
+  <!-- slot for custom quote
+  <StarshipSvelterprise>
+    <p>Take us out, Mr. Sulu.</p>
+  </StarshipSvelterprise>
+  -->
 </main>

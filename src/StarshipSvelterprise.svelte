@@ -1,5 +1,13 @@
 <script>
-  import { warpFactor } from './stores.js';
+  import { derived } from 'svelte/store';
+  import { maxWarpFactor, warpFactor } from './WarpDrive.svelte';
+
+  const quote = derived(warpFactor, ($warpFactor) => {
+    if ($warpFactor >= maxWarpFactor) {
+      return 'I\'m giving her all she\'s got, captain!';
+    }
+    return 'Boldly go where no man has gone before!';
+  });
 </script>
 
 <div class="starfield">
@@ -7,8 +15,19 @@
   <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s"></div>
   <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s"></div>
 </div>
+<div class="quote">
+  <slot>
+    <p>{ $quote }</p>
+  </slot>
+</div>
 
 <style>
+ .quote {
+   font-family: "Times New Roman", Times, serif;
+   font-style: italic;
+   text-align: center;
+ }
+
  .starfield {
     /* create visible canvas 500 x 200 */
     width: 500px;

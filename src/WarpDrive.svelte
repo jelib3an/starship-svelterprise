@@ -1,8 +1,12 @@
+<script context="module">
+  import { writable } from 'svelte/store';
+
+  export const warpFactor = writable(1);
+  export const maxWarpFactor = 10;
+</script>
+
 <script>
   import { derived } from 'svelte/store';
-  import { warpFactor } from './stores.js';
-
-  const maxWarpFactor = 10;
 
   function increaseWarpFactor() {
     if ($warpFactor < maxWarpFactor) {
@@ -17,7 +21,7 @@
   }
 
   const warpIndicator = derived(warpFactor, ($warpFactor) => {
-    return $warpFactor === maxWarpFactor ? 'Maximum Warp' : 'Warp ' + $warpFactor;
+    return $warpFactor >= maxWarpFactor ? 'Maximum Warp' : 'Warp ' + $warpFactor;
   });
 </script>
 
