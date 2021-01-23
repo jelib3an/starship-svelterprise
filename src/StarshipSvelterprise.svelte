@@ -16,6 +16,30 @@
     }
     return 'Boldly go where no man has gone before!';
   });
+
+  const position = { x: 200, y: 75 };
+  function navigate(e) {
+    let x;
+    let y;
+    switch (e.keyCode) {
+      case 37:  x = position.x - 10; break;  // left
+      case 38:  y = position.y - 10;  break;  // up
+      case 39:  x = position.x + 10; break;  // right
+      case 40:  y = position.y + 10;  break;  // down
+      default:  return;
+    }
+
+    if (x > 0 && x < 400) {
+      position.x = x;
+    }
+
+    if (y > 0 && y < 170) {
+      position.y = y;
+    }
+  }
+
+  let maneuvers = -1;
+  $: position && maneuvers++;
 </script>
 
 <div class="quote">
@@ -23,26 +47,30 @@
     <p>{ $quote }</p>
   </slot>
 </div>
-<div class="starfield">
-  <div class="sm-stars" style="animation-duration:{ 25 / $warpFactor }s"></div>
-  <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s"></div>
-  <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s"></div>
-  <div class="starship">
+<div class="starfield" tabindex="0" on:keydown|preventDefault={navigate}>
+  <div class="sm-stars" style="animation-duration:{ 25 / $warpFactor }s;"></div>
+  <div class="med-stars" style="animation-duration:{ 50 / $warpFactor }s;"></div>
+  <div class="lg-stars" style="animation-duration:{ 75 / $warpFactor }s;"></div>
+  <div style="position:relative; left:{position.x}px; top:{position.y}px;">
     <img src="{shipClass}-class.png" alt="starship" />
   </div>
 </div>
+<div class="maneuvers">
+  <p>(Click ship, use arrow keys) Evasive maneuvers: {maneuvers}</p>
+</div>
 
 <style>
- .starship {
-   position: relative;
-   left: 200px;
-   top: 75px;
- }
-
  .quote {
    font-family: "Times New Roman", Times, serif;
    font-style: italic;
    text-align: center;
+ }
+
+ .maneuvers {
+   width: 500px;
+   margin: auto;
+   text-align: right;
+   font-size: 11px;
  }
 
  .starfield {
@@ -51,10 +79,11 @@
     height: 200px;
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
     overflow: hidden;
+    outline: none;
     margin: 5px auto 5px auto;
   }
 
-  /* Randomly plot stars within 1000 x 200 area (double the width of visible canvas */
+  /* Randomly plot stars within 1000 x 200 area (double the width of visible canvas) */
   .sm-stars,
   .sm-stars:after {
     width: 1px;
