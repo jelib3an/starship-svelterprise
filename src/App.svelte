@@ -6,7 +6,7 @@
 <main>
   <h3>Demonstrate warp capability</h3>
   <Starfield>
-    <Starship shipClass="galaxy" />
+    <Starship />
   </Starfield>
 </main>
 

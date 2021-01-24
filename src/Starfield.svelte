@@ -1,5 +1,8 @@
 <script>
   import { onMount } from 'svelte';
+  import WarpControls from './WarpControls.svelte';
+
+  let speed = 0;
 
   const maxWidth = 1000;
   const maxHeight = 600;
@@ -7,14 +10,14 @@
   /**
    * The width of the starfield in pixels.
    *
-   * @type {number}
+   * @type {integer}
    */
   export let width = 500;
 
   /**
    * The height of the starfield in pixels.
    *
-   * @type {number}
+   * @type {integer}
    */
   export let height = 200;
 
@@ -24,17 +27,16 @@
   /**
    * Randomly plot stars on the canvas.
    *
-   * @param {float} ratio - The number of stars to plot per square pixel
+   * @param {integer} n - The number of stars to plot per square pixel
    * @returns {string} The box-shadow css
    */
-  function drawStars(ratio) {
-    const n = width * height * ratio;
+  function drawStars(n) {
     const shadows = [];
     for (let i = 0; i < n; i++) {
-      // randomly plot stars on a size double the width of canvas
-      // this allows the stars to animate left along entire visible canvas
-      const x = Math.random() * width * 2;
-      const y = Math.random() * height;
+      // randomly plot stars on a size double the max width of canvas
+      // this allows the stars to animate left along entire canvas
+      const x = Math.floor(Math.random() * maxWidth * 2);
+      const y = Math.floor(Math.random() * maxHeight);
       shadows.push(x + 'px ' + y + 'px #FFF');
     }
     return shadows.join(',');
@@ -44,26 +46,42 @@
   let starContainerMed;
   let starContainerLg;
 
+  let isMounted = false;
+  $: if (isMounted) {
+    starContainerSm.style.animationDuration = (!speed ? 0 : 50 / speed) + 's';
+    starContainerMed.style.animationDuration = (!speed ? 0 : 100 / speed) + 's';
+    starContainerLg.style.animationDuration = (!speed ? 0 : 150 / speed) + 's';
+  }
+
   onMount(() => {
-    starContainerSm.style.boxShadow = drawStars(0.0015);
-    starContainerMed.style.boxShadow = drawStars(0.0005);
-    starContainerLg.style.boxShadow = drawStars(0.0002);
+    starContainerSm.style.boxShadow = drawStars(900);
+    starContainerMed.style.boxShadow = drawStars(300);
+    starContainerLg.style.boxShadow = drawStars(120);
+    isMounted = true;
   });
 </script>
 
-<div class="starfield" style="width:{width}px; height:{height}px;">
-  <div class="sm-stars" bind:this={starContainerSm} />
-  <div class="med-stars" bind:this={starContainerMed} />
-  <div class="lg-stars" bind:this={starContainerLg} />
-  <slot />
+<div class="container" style="width:{width}px;">
+  {#if $$slots.default}
+    <WarpControls bind:warpFactor={speed} />
+  {/if}
+  <div class="starfield" style="width:{width}px; height:{height}px;">
+    <div class="sm-stars" bind:this={starContainerSm} />
+    <div class="med-stars" bind:this={starContainerMed} />
+    <div class="lg-stars" bind:this={starContainerLg} />
+    <slot />
+  </div>
 </div>
 
 <style>
+  .container {
+    margin: 5px auto 5px auto;
+  }
+
   .starfield {
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
     overflow: hidden;
     outline: none;
-    margin: 5px auto 5px auto;
   }
 
   .sm-stars,

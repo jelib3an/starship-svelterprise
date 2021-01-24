@@ -1,0 +1,38 @@
+<script>
+  const maxWarpFactor = 10;
+
+  export let warpFactor = 0;
+
+  function increaseWarpFactor() {
+    if (warpFactor < maxWarpFactor) {
+      warpFactor++;
+    }
+  }
+
+  function decreaseWarpFactor() {
+    if (warpFactor > 0) {
+      warpFactor--;
+    }
+  }
+
+  $: warpIndicator = warpFactor >= maxWarpFactor ? 'Maximum Warp' : 'Warp ' + warpFactor;
+  $: quote = warpFactor >= maxWarpFactor ? "(I'm giving it all she's got, captain!)" : '';
+</script>
+
+<div>
+  <button on:click={decreaseWarpFactor}>-</button>
+  <button on:click={increaseWarpFactor}>+</button>
+  {warpIndicator}
+  <span class="quote">{quote}</span>
+</div>
+
+<style>
+  button {
+    margin-right: 2px;
+    width: 30px;
+  }
+  .quote {
+    font-family: 'Times New Roman', Times, serif;
+    font-style: italic;
+  }
+</style>
