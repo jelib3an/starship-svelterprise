@@ -55,6 +55,7 @@
   <div class="sm-stars" bind:this={starContainerSm} />
   <div class="med-stars" bind:this={starContainerMed} />
   <div class="lg-stars" bind:this={starContainerLg} />
+  <slot />
 </div>
 
 <style>
