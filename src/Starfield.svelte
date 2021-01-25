@@ -2,8 +2,6 @@
   import { onMount } from 'svelte';
   import WarpControls from './WarpControls.svelte';
 
-  let speed = 0;
-
   const maxWidth = 1000;
   const maxHeight = 600;
 
@@ -46,24 +44,24 @@
   let starContainerMed;
   let starContainerLg;
 
-  let isMounted = false;
-  $: if (isMounted) {
-    starContainerSm.style.animationDuration = (!speed ? 0 : 50 / speed) + 's';
-    starContainerMed.style.animationDuration = (!speed ? 0 : 100 / speed) + 's';
-    starContainerLg.style.animationDuration = (!speed ? 0 : 150 / speed) + 's';
+  function animate(event) {
+    starContainerSm.style.animationDuration =
+      (!event.detail.warpFactor ? 0 : 50 / event.detail.warpFactor) + 's';
+    starContainerMed.style.animationDuration =
+      (!event.detail.warpFactor ? 0 : 100 / event.detail.warpFactor) + 's';
+    starContainerLg.style.animationDuration =
+      (!event.detail.warpFactor ? 0 : 150 / event.detail.warpFactor) + 's';
   }
-
   onMount(() => {
     starContainerSm.style.boxShadow = drawStars(900);
     starContainerMed.style.boxShadow = drawStars(300);
     starContainerLg.style.boxShadow = drawStars(120);
-    isMounted = true;
   });
 </script>
 
 <div class="container" style="width:{width}px;">
   {#if $$slots.default}
-    <WarpControls bind:warpFactor={speed} />
+    <WarpControls on:change={animate} />
   {/if}
   <div class="starfield" style="width:{width}px; height:{height}px;">
     <div class="sm-stars" bind:this={starContainerSm} />

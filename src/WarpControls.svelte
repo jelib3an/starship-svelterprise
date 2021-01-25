@@ -1,7 +1,9 @@
 <script>
+  import { createEventDispatcher } from 'svelte';
+
   const maxWarpFactor = 10;
 
-  export let warpFactor = 0;
+  let warpFactor = 0;
 
   function increaseWarpFactor() {
     if (warpFactor < maxWarpFactor) {
@@ -15,8 +17,11 @@
     }
   }
 
+  const dispatch = createEventDispatcher();
+  $: dispatch('change', { warpFactor: warpFactor });
+
   $: warpIndicator = warpFactor >= maxWarpFactor ? 'Maximum Warp' : 'Warp ' + warpFactor;
-  $: quote = warpFactor >= maxWarpFactor ? "(I'm giving it all she's got, captain!)" : '';
+  $: quote = warpFactor >= maxWarpFactor ? "(I'm giving her all she's got, captain!)" : '';
 </script>
 
 <div>
