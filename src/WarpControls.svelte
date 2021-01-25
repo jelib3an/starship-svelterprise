@@ -17,6 +17,9 @@
     }
   }
 
+  /**
+   * @event {{ warpFactor: integer }} change
+   */
   const dispatch = createEventDispatcher();
   $: dispatch('change', { warpFactor: warpFactor });
 
@@ -27,7 +30,7 @@
 <div>
   <button on:click={decreaseWarpFactor}>-</button>
   <button on:click={increaseWarpFactor}>+</button>
-  {warpIndicator}
+  <span>{warpIndicator}</span>
   <span class="quote">{quote}</span>
 </div>
 
@@ -36,8 +39,12 @@
     margin-right: 2px;
     width: 30px;
   }
+
+  span {
+    font-size: 12px;
+  }
+
   .quote {
-    font-family: 'Times New Roman', Times, serif;
     font-style: italic;
   }
 </style>

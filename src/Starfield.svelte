@@ -1,5 +1,5 @@
 <script>
-  import { onMount } from 'svelte';
+  import { setContext } from 'svelte';
   import WarpControls from './WarpControls.svelte';
 
   const maxWidth = 1000;
@@ -18,6 +18,11 @@
    * @type {integer}
    */
   export let height = 200;
+
+  setContext('ss.starfield', {
+    width: () => width,
+    height: () => height,
+  });
 
   $: width = width > maxWidth ? maxWidth : width;
   $: height = height > maxHeight ? maxHeight : height;
@@ -63,7 +68,7 @@
   .starfield {
     background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
     overflow: hidden;
-    outline: none;
+    position: relative;
   }
 
   .sm-stars,
