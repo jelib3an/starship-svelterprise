@@ -8,5 +8,5 @@
   "trailingComma": "es5",
   "bracketSpacing": true,
   "arrowParens": "always",
-  "plugins": ["prettier-plugin-svelte"]
+  "plugins": ["./node_modules/prettier-plugin-svelte"]
 }

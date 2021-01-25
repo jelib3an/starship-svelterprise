@@ -22,41 +22,16 @@
   $: width = width > maxWidth ? maxWidth : width;
   $: height = height > maxHeight ? maxHeight : height;
 
-  /**
-   * Randomly plot stars on the canvas.
-   *
-   * @param {integer} n - The number of stars to plot per square pixel
-   * @returns {string} The box-shadow css
-   */
-  function drawStars(n) {
-    const shadows = [];
-    for (let i = 0; i < n; i++) {
-      // randomly plot stars on a size double the max width of canvas
-      // this allows the stars to animate left along entire canvas
-      const x = Math.floor(Math.random() * maxWidth * 2);
-      const y = Math.floor(Math.random() * maxHeight);
-      shadows.push(x + 'px ' + y + 'px #FFF');
-    }
-    return shadows.join(',');
-  }
-
   let starContainerSm;
   let starContainerMed;
   let starContainerLg;
 
   function animate(event) {
-    starContainerSm.style.animationDuration =
-      (!event.detail.warpFactor ? 0 : 50 / event.detail.warpFactor) + 's';
-    starContainerMed.style.animationDuration =
-      (!event.detail.warpFactor ? 0 : 100 / event.detail.warpFactor) + 's';
-    starContainerLg.style.animationDuration =
-      (!event.detail.warpFactor ? 0 : 150 / event.detail.warpFactor) + 's';
+    const warpFactor = event.detail.warpFactor;
+    starContainerSm.style.animationDuration = (!warpFactor ? 0 : 50 / warpFactor) + 's';
+    starContainerMed.style.animationDuration = (!warpFactor ? 0 : 100 / warpFactor) + 's';
+    starContainerLg.style.animationDuration = (!warpFactor ? 0 : 150 / warpFactor) + 's';
   }
-  onMount(() => {
-    starContainerSm.style.boxShadow = drawStars(900);
-    starContainerMed.style.boxShadow = drawStars(300);
-    starContainerLg.style.boxShadow = drawStars(120);
-  });
 </script>
 
 <div class="container" style="width:{width}px;">
@@ -71,7 +46,16 @@
   </div>
 </div>
 
-<style>
+<style type="text/scss">
+  /* Randomly plot stars on a size double the max width of canvas. This allows the stars to animate left along entire canvas. */
+  @function draw-stars($n) {
+    $shadows: '#{random(2000)}px #{random(600)}px #FFF';
+    @for $i from 2 through $n {
+      $shadows: '#{$shadows} , #{random(2000)}px #{random(600)}px #FFF'
+    }
+    @return unquote($shadows);
+  }
+
   .container {
     margin: 5px auto 5px auto;
   }
@@ -87,21 +71,33 @@
     width: 1px;
     height: 1px;
     background: transparent;
+    box-shadow: draw-stars(900);
   }
+
   .med-stars,
   .med-stars::after {
     width: 2px;
     height: 2px;
     background: transparent;
+    box-shadow: draw-stars(300);
   }
+
   .lg-stars,
   .lg-stars::after {
     width: 3px;
     height: 3px;
     background: transparent;
+    box-shadow: draw-stars(120);
   }
 
-  /* Animate the stars towards the left. When complete, reset positions 2000px to the right. This has to match max canvas width. */
+  .sm-stars::after,
+  .med-stars::after,
+  .lg-stars::after {
+    content: ' ';
+    position: absolute;
+    left: 2000px;
+  }
+
   @keyframes moveLeft {
     from {
       transform: translateX(0px);
@@ -115,13 +111,5 @@
   .med-stars,
   .lg-stars {
     animation: moveLeft linear infinite;
-  }
-
-  .sm-stars:after,
-  .med-stars:after,
-  .lg-stars:after {
-    content: ' ';
-    position: absolute;
-    left: 2000px;
   }
 </style>
