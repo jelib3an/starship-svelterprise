@@ -1,6 +1,8 @@
 # Starship Svelterprise
 
-Just having fun with svelte. Play with it on the [REPL](https://svelte.dev/repl/6a86a65834fc47f1a2c929527b30a2d4?version=3.31.2). 
+## Live demo
+
+Play around on the [REPL](https://svelte.dev/repl/6a86a65834fc47f1a2c929527b30a2d4?version=3.31.2). 
 
 ---
 
@@ -9,4 +11,14 @@ Just having fun with svelte. Play with it on the [REPL](https://svelte.dev/repl/
 ```bash
 npm install
 npm run dev
+```
+---
+
+## Usage
+
+```svelte
+<Starfield width="500" height="250">
+  <Starship posX="100" posY="150" />
+  <Starship shipClass="galaxy" posX="275" posY="50" />
+</Starfield>
 ```
