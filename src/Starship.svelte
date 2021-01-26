@@ -1,6 +1,7 @@
 <script>
-  import { setContext } from "svelte";
-  import Navigations from "./Navigations.svelte";
+  import { setContext } from 'svelte';
+  import Navigations from './Navigations.svelte';
+  import Weapons from './Weapons.svelte';
 
   /**
    * The starship class. Defaults to "ambassador".
@@ -46,7 +47,14 @@
   }
 </script>
 
-<div style="position:absolute; left:{posX}px; top:{posY}px;" tabIndex="0" on:keydown|preventDefault={keydown}>
+<div
+  style="position:absolute; left:{posX}px; top:{posY}px;"
+  tabIndex="0"
+  on:keydown|preventDefault={keydown}
+>
   <img src="{shipClass}-class.png" alt="starship" />
 </div>
-<Navigations bind:posX={posX} bind:posY={posY} bind:keydownEvent={keydownEvent} />
+
+<Navigations bind:posX bind:posY bind:keydownEvent />
+
+<Weapons bind:keydownEvent />

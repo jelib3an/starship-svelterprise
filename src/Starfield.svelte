@@ -56,7 +56,7 @@
   @function draw-stars($n) {
     $shadows: '#{random(2000)}px #{random(600)}px #FFF';
     @for $i from 2 through $n {
-      $shadows: '#{$shadows} , #{random(2000)}px #{random(600)}px #FFF'
+      $shadows: '#{$shadows} , #{random(2000)}px #{random(600)}px #FFF';
     }
     @return unquote($shadows);
   }

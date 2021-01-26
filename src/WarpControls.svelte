@@ -23,7 +23,10 @@
   const dispatch = createEventDispatcher();
   $: dispatch('change', { warpFactor: warpFactor });
 
-  $: warpIndicator = warpFactor >= maxWarpFactor ? 'Maximum Warp' : 'Warp ' + warpFactor;
+  $: warpIndicator =
+    warpFactor >= maxWarpFactor
+      ? 'Maximum Warp'
+      : 'Warp ' + (warpFactor ? warpFactor : 'Disengaged');
   $: quote = warpFactor >= maxWarpFactor ? "(I'm giving her all she's got, captain!)" : '';
 </script>
 

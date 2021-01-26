@@ -1,5 +1,5 @@
 <script>
-  import { getContext } from "svelte";
+  import { getContext } from 'svelte';
 
   const { width: canvasWidth, height: canvasHeight } = getContext('ss.starfield');
   const { width: shipWidth, height: shipHeight } = getContext('ss.starship');
@@ -30,11 +30,11 @@
         return;
     }
 
-    if (x > 0 && x < (canvasWidth() - shipWidth())) {
+    if (x > 0 && x < canvasWidth() - shipWidth()) {
       posX = x;
     }
 
-    if (y > 0 && y < (canvasHeight() - shipHeight())) {
+    if (y > 0 && y < canvasHeight() - shipHeight()) {
       posY = y;
     }
   }
