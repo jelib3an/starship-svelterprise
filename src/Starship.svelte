@@ -1,5 +1,6 @@
 <script>
-  import { getContext } from "svelte";
+  import { setContext } from "svelte";
+  import Navigations from "./Navigations.svelte";
 
   /**
    * The starship class. Defaults to "ambassador".
@@ -11,8 +12,8 @@
     shipClass = 'ambassador';
   }
 
-  const shipWidth = 100;
-  const shipHeight = 30;
+  const width = 100;
+  const height = 30;
 
   /**
    * The x position of the starship relative to starfield container.
@@ -28,39 +29,24 @@
    */
   export let posY = 0;
 
-  const { width: canvasWidth, height: canvasHeight } = getContext('ss.starfield');
+  // ensure positions are always integers (need typescript!)
+  $: posX = parseInt(posX);
+  $: posY = parseInt(posY);
 
-  function navigate(e) {
-    let x;
-    let y;
-    switch (e.keyCode) {
-      case 37: // left
-        x = posX - 10;
-        break;
-      case 38: // up
-        y = posY - 10;
-        break;
-      case 39: // right
-        x = posX + 10;
-        break;
-      case 40: // down
-        y = posY + 10;
-        break;
-      default:
-        return;
-    }
+  setContext('ss.starship', {
+    posX: () => posX,
+    posY: () => posY,
+    width: () => width,
+    height: () => height,
+  });
 
-    if (x > 0 && x < (canvasWidth() - shipWidth)) {
-      posX = x;
-    }
-
-    if (y > 0 && y < (canvasHeight() - shipHeight)) {
-      posY = y;
-    }
+  let keydownEvent = {};
+  function keydown(event) {
+    keydownEvent = event;
   }
-
 </script>
 
-<div style="position:absolute; left:{posX}px; top:{posY}px;" tabIndex="0" on:keydown|preventDefault={navigate}>
+<div style="position:absolute; left:{posX}px; top:{posY}px;" tabIndex="0" on:keydown|preventDefault={keydown}>
   <img src="{shipClass}-class.png" alt="starship" />
 </div>
+<Navigations bind:posX={posX} bind:posY={posY} bind:keydownEvent={keydownEvent} />

@@ -5,8 +5,7 @@
 
 <main>
   <div>
-    <p>Click a ship.</p>
-    <p>Use arrow keys to maneuver.</p>
+    <p>Click a ship. Use arrow keys to maneuver. Spacebar to fire photon torpedos.</p>
   </div>
   <Starfield width="500" height="250">
     <Starship posX="100" posY="150" />
@@ -15,7 +14,7 @@
 </main>
 
 <style>
-  div {
+  p {
     text-align: center;
     font-size: 12px;
   }
