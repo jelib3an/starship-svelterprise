@@ -1,5 +1,7 @@
 # Starship Svelterprise
 
+Fun with Svelte. Demonstrating concepts such as `reactive declarations`, `props`, `event forwarding`, `component bindings`, `this binding`, `slots`, and `context api`.
+
 ## Live demo
 
 Play around on the [REPL](https://svelte.dev/repl/6a86a65834fc47f1a2c929527b30a2d4?version=3.31.2). 
