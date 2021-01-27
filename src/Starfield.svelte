@@ -39,7 +39,7 @@
   }
 </script>
 
-<div class="container" style="width:{width}px;">
+<div class={$$props.class} style="width:{width}px;">
   {#if $$slots.default}
     <WarpControls on:change={animate} />
   {/if}
@@ -59,10 +59,6 @@
       $shadows: '#{$shadows} , #{random(2000)}px #{random(600)}px #FFF';
     }
     @return unquote($shadows);
-  }
-
-  .container {
-    margin: 5px auto 5px auto;
   }
 
   .starfield {
