@@ -42,15 +42,12 @@
   });
 
   let keydownEvent = {};
-  function keydown(event) {
-    keydownEvent = event;
-  }
 </script>
 
 <div
   style="position:absolute; left:{posX}px; top:{posY}px;"
   tabIndex="0"
-  on:keydown|preventDefault={keydown}
+  on:keydown|preventDefault={(e) => (keydownEvent = e)}
 >
   <img src="{shipClass}-class.png" alt="starship" />
 </div>
