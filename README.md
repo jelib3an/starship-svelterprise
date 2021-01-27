@@ -19,6 +19,11 @@ npm run dev
 ## Usage
 
 ```svelte
+<script>
+  import Starfield from './Starfield.svelte';
+  import Starship from './Starship.svelte';
+</script>
+
 <Starfield width="500" height="250">
   <Starship posX="100" posY="150" />
   <Starship shipClass="galaxy" posX="275" posY="50" />
