@@ -11,15 +11,9 @@
     height: starshipHeight,
   } = getContext('ss.starship');
 
-  const { width: canvasWidth } = getContext('ss.starfield');
-
   // spacebar
   $: if (keydownEvent?.keyCode === 32) {
     fire();
-  }
-
-  function sleep(ms) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
   }
 
   async function fire() {
@@ -30,12 +24,6 @@
     photon.parentNode.appendChild(clone);
     clone.style.left = posX + 'px';
     clone.style.top = posY + 'px';
-
-    for (let i = 0; i < canvasWidth(); i++) {
-      posX++;
-      clone.style.left = posX + 'px';
-      await sleep(7);
-    }
   }
 </script>
 
@@ -52,7 +40,7 @@
     height: 6px;
     width: 6px;
     transform: scale(1);
-    animation: pulse 1s infinite;
+    animation: pulse 1s infinite, moveRight 10s linear forwards 1;
   }
 
   @keyframes pulse {
@@ -69,6 +57,15 @@
     100% {
       transform: scale(0.95);
       box-shadow: 0 0 0 0 rgba(255, 177, 66, 0);
+    }
+  }
+
+  @keyframes moveRight {
+    from {
+      transform: translateX(0px);
+    }
+    to {
+      transform: translateX(2000px);
     }
   }
 </style>
